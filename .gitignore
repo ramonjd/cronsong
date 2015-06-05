@@ -1,0 +1,9 @@
+bower_components/
+node_modules/
+*.log
+.idea
+*.iml
+target/
+.tmp
+dist
+mp3s/*
