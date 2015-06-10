@@ -5,8 +5,17 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var less = require('gulp-less');
 var path = require('path');
+var babel = require("gulp-babel");
 
 //https://gist.github.com/mikaelbr/8425025
+//https://babeljs.io/docs/setup/#gulp
+gulp.task('babel', function () {
+  return gulp.src('src/**/*.es6')
+    .pipe(babel())
+    .pipe(gulp.dest('app'));
+});
+
+
 gulp.task('build', function () {
   
   var stream = browserify({
@@ -36,4 +45,4 @@ gulp.task('copy-html', function() {
     .pipe(gulp.dest('./app/public'));
 });
 
-gulp.task('default', ['styles', 'build', 'copy-html']);
+gulp.task('default', ['styles', 'babel', 'build', 'copy-html']);

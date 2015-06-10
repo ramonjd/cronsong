@@ -1,10 +1,11 @@
 import express from 'express';
-import Song from './Cron';
+import Cron from './Cron';
 
 let router = express.Router();
 
 router.get('/', Cron.index);
-router.put('/', Cron.save);
-router.get('/:user', Cron.getCronByUser);
+//router.get('/:comment', Cron.getJobByComment);
+router.post('/', Cron.create);
+//router.delete('/:comment', Cron.delete);
 
 module.exports = router;

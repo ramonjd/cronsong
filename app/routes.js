@@ -6,12 +6,17 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _apiSong = require('./api/song');
+var _apiSongs = require('./api/songs');
 
-var _apiSong2 = _interopRequireDefault(_apiSong);
+var _apiSongs2 = _interopRequireDefault(_apiSongs);
+
+var _apiCrons = require('./api/crons');
+
+var _apiCrons2 = _interopRequireDefault(_apiCrons);
 
 exports['default'] = function (app) {
-  app.use('/api/songs', _apiSong2['default']);
+  app.use('/api/songs', _apiSongs2['default']);
+  app.use('/api/crons', _apiCrons2['default']);
 };
 
 ;

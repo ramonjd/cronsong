@@ -1,4 +1,4 @@
-require('crontab').load('skyid', function(err, crontab) {
+require('crontab').load('', function(err, crontab) {
 /*  // create with string expression
   var job = crontab.create('ls -la', '0 7 * * 1,2,3,4,5');
 

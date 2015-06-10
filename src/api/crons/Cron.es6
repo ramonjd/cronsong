@@ -1,27 +1,39 @@
-
 import CronModel from './CronModel';
+
+let user = 'skyid';
 
 let Cron  = {
 
   index(req, res) {
-    CronModel.find((crons) => {
-      // list static files in dir
-      return res.status(200).json({});
+    CronModel.show().then(cron => {
+      return res.status(200).json({
+        'jobs' : cron
+      });
     });
   },
 
-  getCronByUser(req, res, next) {
-    var cronUser = req.params.user;
-    CronModel.getCronByUser(cronUser).then((status, tab) => {
-      // return contents of static file
+  create(req, res, next) {
+    var newCron= new CronModel(req.body);
+    CronModel.create(newCron).then(cron => {
+      return res.status(200).json({
+        'jobs' : cron
+      });
+    });
+  },
+
+  delete(req, res) {
+    let commentBody = req.params.comment;
+    CronModel.delete({comment : commentBody}).then((status, tab) => {
       return res.status(200).json(tab);
     });
   },
 
-  save(eq, res, next)) {
-    var newCron= new CronModel(req.body);
-    // save static file
-  },
+  getJobByComment(req, res) {
+    let commentBody = req.params.comment;
+    CronModel.getJobByComment({comment : commentBody}).then((status, tab) => {
+      return res.status(200).json(tab);
+    });
+  }
 
 };
 

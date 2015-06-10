@@ -1,6 +1,6 @@
 const cronCommands = {
   
-  'play' : 'PLAYER + ' ' + DIR + chosenSong'
+  'play' : 'PLAYER + \' \' + DIR + chosenSong'
 
 };
 
