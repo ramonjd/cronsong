@@ -49,9 +49,9 @@ var CronModel = (function () {
 
     console.log('config.CMD', _configEnvDev2['default'].CMD);
     return {
-      command: _configEnvDev2['default'].CMD,
+      command: _configEnvDev2['default'].CMD + ' ' + decodeURIComponent(properties.song),
       expression: decodeURIComponent(properties.expression),
-      comment: 'tb-' + decodeURIComponent(properties.comment) + '-' + Math.floor(new Date() / 1000)
+      comment: 'tb-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
     };
   }
 

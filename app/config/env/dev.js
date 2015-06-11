@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 var CONSTANTS = {
   DIR: './mp3s/_processed/',
-  CMD: 'omxplayer %dir% %song%'
+  CMD: '/home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/sounds/playme.js'
 };
 
 exports['default'] = CONSTANTS;

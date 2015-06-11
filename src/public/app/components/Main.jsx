@@ -68,17 +68,16 @@ class Main extends React.Component {
   
   
     createCron(cron){
-     let comment = this.state.random ? 'random' : this.state.data.name;
+     let song = this.state.random ? 'random' : this.state.data.name;
      console.log('Main has received: ', cron);
-     console.log('Main cron on comment: ', comment + '-' + Math.floor(new Date() / 1000));
+     console.log('Main cron on comment: ', song + '-' + Math.floor(new Date() / 1000));
         Request
         .post('/api/crons')
           .type('form')
           .send({'expression' : encodeURIComponent(cron.expression)})
-          .send({'comment' : encodeURIComponent(comment)})
+          .send({'song' : encodeURIComponent(song)})
           .end((err, res) => {
             console.log(res);
-            done();
         });
 
     } 

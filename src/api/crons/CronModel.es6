@@ -26,9 +26,9 @@ class CronModel {
     constructor(properties = {}) {
     console.log('config.CMD', config.CMD);
       return {
-        command : config.CMD,
+        command : config.CMD + ' ' + decodeURIComponent(properties.song),
         expression : decodeURIComponent(properties.expression),
-        comment : 'tb-' + decodeURIComponent(properties.comment) + '-' + Math.floor(new Date() / 1000)
+        comment : 'tb-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
       };
     }
 
