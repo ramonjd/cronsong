@@ -6,6 +6,10 @@ import Request from 'superagent';
 //https://facebook.github.io/react/tips/expose-component-functions.html
 //http://facebook.github.io/react/docs/tutorial.html
 // http://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html
+
+let randomCronComment = 'random-';
+let songCronComment = '';
+
 class Main extends React.Component {
   
     constructor() {
@@ -20,6 +24,7 @@ class Main extends React.Component {
       this.showList = this.showList.bind(this);
       this.showRandom = this.showRandom.bind(this);
       this.selectSong = this.selectSong.bind(this);
+      this.createCron = this.createCron.bind(this);
     }
   
   
@@ -53,17 +58,35 @@ class Main extends React.Component {
         showSongList : false,
         random : true
       });
-/*      Request
-        .get('api/songs/random')
+      Request
+        .get('/api/songs/random')
         .end((err, res) => {
-          this.setState({data: JSON.parse(res.text)});
-        });*/
+          this.setState({data: JSON.parse(res.text)[0]});
+        });
     }
+  
+  
+  
+    createCron(cron){
+     let comment = this.state.random ? 'random' : this.state.data.name;
+     console.log('Main has received: ', cron);
+     console.log('Main cron on comment: ', comment + '-' + Math.floor(new Date() / 1000));
+        Request
+        .post('/api/crons')
+          .type('form')
+          .send({'expression' : encodeURIComponent(cron.expression)})
+          .send({'comment' : encodeURIComponent(comment)})
+          .end((err, res) => {
+            console.log(res);
+            done();
+        });
+
+    } 
   
   
     renderCronSetter(){
       if ( this.state.showCronSetter === true) {
-        return <CronSetter />;
+        return <CronSetter onCreateCronHandler={this.createCron} />;
       }
     }
   

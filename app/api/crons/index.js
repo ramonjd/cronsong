@@ -13,8 +13,8 @@ var _Cron2 = _interopRequireDefault(_Cron);
 var router = _express2['default'].Router();
 
 router.get('/', _Cron2['default'].index);
-//router.get('/:comment', Cron.getJobByComment);
+router.get('/:comment', _Cron2['default'].getJobByComment);
 router.post('/', _Cron2['default'].create);
-//router.delete('/:comment', Cron.delete);
+router['delete']('/:comment', _Cron2['default'].deleteJobByComment);
 
 module.exports = router;

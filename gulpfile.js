@@ -36,8 +36,7 @@ gulp.task('styles', function() {
     gulp.src(['./src/public/less/**/*.less'])
         .pipe(less())
         .pipe(gulp.dest('./app/public/css'));
-})
-
+});
 
 gulp.task('copy-html', function() {
     gulp.src('./src/public/index.html')

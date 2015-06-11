@@ -16,6 +16,10 @@ var _fs2 = _interopRequireDefault(_fs);
 
 var _utilsUtils = require('../../utils/Utils');
 
+var _configEnvDev = require('../../config/env/dev');
+
+var _configEnvDev2 = _interopRequireDefault(_configEnvDev);
+
 var DIR = './mp3s/_processed/';
 
 var remodelArray = function remodelArray() {
@@ -40,20 +44,16 @@ var SongModel = (function () {
     value: function find() {
       var callback = arguments[0] === undefined ? function () {} : arguments[0];
 
-      callback(remodelArray((0, _utilsUtils.filterMp3)(_fs2['default'].readdirSync(DIR))));
+      callback(remodelArray((0, _utilsUtils.filterMp3)(_fs2['default'].readdirSync(_configEnvDev2['default'].DIR))));
     }
   }, {
     key: 'random',
     value: function random() {
       var callback = arguments[0] === undefined ? function () {} : arguments[0];
 
-      var files = (0, _utilsUtils.filterMp3)(_fs2['default'].readdirSync(DIR));
+      var files = (0, _utilsUtils.filterMp3)(_fs2['default'].readdirSync(_configEnvDev2['default'].DIR));
       var randomIndex = (0, _utilsUtils.ran)(1, files.length);
-      var song = [];
-      files.some(function (file, index) {
-        song = file;
-        return index === randomIndex - 1;
-      });
+      var song = (0, _utilsUtils.filterByIndex)(files, randomIndex - 1);
       callback(remodelArray([song]));
     }
   }]);

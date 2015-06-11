@@ -3,8 +3,11 @@ import SelectList from './SelectList.jsx';
 import Button from './Button.jsx';
 import timeUnits from '../constants/timeUnits.js';
 
+let cronPattern = '%minute% %hour% * * %day%';
+
 class CronSetter extends React.Component {
-    
+  
+  
   constructor() {
     super();
       this.state = {
@@ -48,7 +51,7 @@ class CronSetter extends React.Component {
   
   selectEveryWeekDay() {
     this.setState({
-      day : '*',
+      day : '1-5',
       showSelectTime: true,
       showSelectDay: false,
       selectClassName: 'select-every-week-day'
@@ -56,7 +59,10 @@ class CronSetter extends React.Component {
   }    
   
   createCron() {
-    console.log('create cron on: ', this.state.day + ' at ' + this.state.hour + ':' + this.state.minute);
+    let cron = {
+      expression: cronPattern.replace('%minute%', this.state.minute).replace('%hour%', this.state.hour).replace('%day%', this.state.day)
+    };
+    this.props.onCreateCronHandler(cron);
   } 
   
   

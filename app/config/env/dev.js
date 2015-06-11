@@ -3,9 +3,10 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var DIR = './mp3s/_processed/';
-
-exports['default'] = {
-  'DIR': DIR
+var CONSTANTS = {
+  DIR: './mp3s/_processed/',
+  CMD: 'omxplayer %dir% %song%'
 };
+
+exports['default'] = CONSTANTS;
 module.exports = exports['default'];

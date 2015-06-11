@@ -20,6 +20,8 @@ var Cron = {
 
   create: function create(req, res, next) {
     var newCron = new _CronModel2['default'](req.body);
+    console.log('newCron from', req.body);
+    console.log('newCron to', newCron);
     _CronModel2['default'].create(newCron).then(function (cron) {
       return res.status(200).json({
         'jobs': cron
@@ -27,17 +29,25 @@ var Cron = {
     });
   },
 
-  'delete': function _delete(req, res) {
+  deleteJobByComment: function deleteJobByComment(req, res) {
+
     var commentBody = req.params.comment;
-    _CronModel2['default']['delete']({ comment: commentBody }).then(function (status, tab) {
-      return res.status(200).json(tab);
+    console.log('deleteJobByComment', commentBody);
+
+    _CronModel2['default'].deleteJobByComment(commentBody).then(function (cron) {
+      return res.status(200).json({
+        'jobs': cron
+      });
     });
   },
 
   getJobByComment: function getJobByComment(req, res) {
     var commentBody = req.params.comment;
-    _CronModel2['default'].getJobByComment({ comment: commentBody }).then(function (status, tab) {
-      return res.status(200).json(tab);
+    console.log('getJobByComment', commentBody);
+    _CronModel2['default'].getJobByComment(commentBody).then(function (cron) {
+      return res.status(200).json({
+        'jobs': cron
+      });
     });
   }
 

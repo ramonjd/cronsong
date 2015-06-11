@@ -18,6 +18,10 @@ var _promise = require('promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
+var _configEnvDev = require('../../config/env/dev');
+
+var _configEnvDev2 = _interopRequireDefault(_configEnvDev);
+
 //https://github.com/dachev/node-crontab/blob/master/test/runner.js
 // http://www.sebastianseilund.com/nodejs-async-in-practice
 
@@ -25,11 +29,15 @@ var remodelArray = function remodelArray() {
   var tabs = arguments[0] === undefined ? [] : arguments[0];
 
   return tabs.map(function (tab) {
-    return {
-      'expression': tab.minute().toString() + tab.hour().toString() + tab.dom().toString() + tab.month().toString() + tab.dow().toString(),
-      'command': tab.command(),
-      'comment': tab.comment()
-    };
+    var comment = tab.comment();
+    var command = tab.command();
+    if (comment.split('-')[0] === 'tb') {
+      return {
+        'expression': tab.minute().toString() + tab.hour().toString() + tab.dom().toString() + tab.month().toString() + tab.dow().toString(),
+        'command': tab.command(),
+        'comment': tab.comment()
+      };
+    }
   });
 };
 
@@ -39,11 +47,11 @@ var CronModel = (function () {
 
     _classCallCheck(this, CronModel);
 
-    //model something here
+    console.log('config.CMD', _configEnvDev2['default'].CMD);
     return {
-      command: properties.command.toString(),
+      command: _configEnvDev2['default'].CMD,
       expression: decodeURIComponent(properties.expression),
-      comment: properties.comment.toString()
+      comment: 'tb-' + decodeURIComponent(properties.comment) + '-' + Math.floor(new Date() / 1000)
     };
   }
 
@@ -53,7 +61,7 @@ var CronModel = (function () {
       var user = arguments[0] === undefined ? '' : arguments[0];
 
       return new _promise2['default'](function (resolve, reject) {
-        _crontab2['default'].load('', function (err, tab) {
+        _crontab2['default'].load(user, function (err, tab) {
           if (err) {
             reject(err);
           } else {
@@ -69,7 +77,7 @@ var CronModel = (function () {
       var user = arguments[1] === undefined ? '' : arguments[1];
 
       return new _promise2['default'](function (resolve, reject) {
-        _crontab2['default'].load('', function (err, tab) {
+        _crontab2['default'].load(user, function (err, tab) {
           if (err) {
             reject(err);
           } else {
@@ -86,29 +94,43 @@ var CronModel = (function () {
       });
     }
   }, {
-    key: 'delete',
-    value: function _delete() {
-      var cron = arguments[0] === undefined ? {} : arguments[0];
+    key: 'deleteJobByComment',
+    value: function deleteJobByComment() {
+      var comment = arguments[0] === undefined ? '' : arguments[0];
       var user = arguments[1] === undefined ? '' : arguments[1];
 
-      return loadTabs(user).then(function (status, tab) {
-        return {
-          'status': status,
-          'jobs': tab.remove(comment)
-        };
+      return new _promise2['default'](function (resolve, reject) {
+        _crontab2['default'].load(user, function (err, tab) {
+          if (err) {
+            reject(err);
+          } else {
+            tab.remove({ 'comment': comment });
+            tab.save(function (err, tab) {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(remodelArray(tab.jobs()));
+              }
+            });
+          }
+        });
       });
     }
   }, {
     key: 'getJobByComment',
     value: function getJobByComment() {
-      var comment = arguments[0] === undefined ? {} : arguments[0];
+      var comment = arguments[0] === undefined ? '' : arguments[0];
       var user = arguments[1] === undefined ? '' : arguments[1];
 
-      return loadTabs(user).then(function (status, tab) {
-        return {
-          'status': status,
-          'jobs': tab.jobs(comment)
-        };
+      return new _promise2['default'](function (resolve, reject) {
+        _crontab2['default'].load(user, function (err, tab) {
+          if (err) {
+            reject(err);
+          } else {
+            console.log('get job by comment', tab.jobs({ 'comment': comment }));
+            resolve(remodelArray(tab.jobs({ 'comment': comment })));
+          }
+        });
       });
     }
   }]);
