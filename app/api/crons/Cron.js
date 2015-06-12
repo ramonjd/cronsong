@@ -30,10 +30,8 @@ var Cron = {
   },
 
   deleteJobByComment: function deleteJobByComment(req, res) {
-
     var commentBody = req.params.comment;
     console.log('deleteJobByComment', commentBody);
-
     _CronModel2['default'].deleteJobByComment(commentBody).then(function (cron) {
       return res.status(200).json({
         'jobs': cron
@@ -45,6 +43,14 @@ var Cron = {
     var commentBody = req.params.comment;
     console.log('getJobByComment', commentBody);
     _CronModel2['default'].getJobByComment(commentBody).then(function (cron) {
+      return res.status(200).json({
+        'jobs': cron
+      });
+    });
+  },
+
+  clearAll: function clearAll(req, res, next) {
+    _CronModel2['default'].clearAll(newCron).then(function (cron) {
       return res.status(200).json({
         'jobs': cron
       });

@@ -1,3 +1,5 @@
+#!/usr/local/bin/node
+
 import fs from 'fs';
 import {ran} from '../utils/Utils';
 import {filterMp3} from '../utils/Utils';
@@ -19,7 +21,7 @@ if (args[0]) {
   }
   console.log(config.CMD + ' ' + config.DIR + song);
   //execute(config.CMD + ' ' + config.DIR + song);
-  
+
   
 } else {
   console.log('No song argument passed');

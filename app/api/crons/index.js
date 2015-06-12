@@ -16,5 +16,6 @@ router.get('/', _Cron2['default'].index);
 router.get('/:comment', _Cron2['default'].getJobByComment);
 router.post('/', _Cron2['default'].create);
 router['delete']('/:comment', _Cron2['default'].deleteJobByComment);
+router['delete']('/', _Cron2['default'].clearAll);
 
 module.exports = router;

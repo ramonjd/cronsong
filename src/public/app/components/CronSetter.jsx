@@ -65,10 +65,9 @@ class CronSetter extends React.Component {
     this.props.onCreateCronHandler(cron);
   } 
   
-  
   renderTime(){
     if (this.state.showSelectTime === true) {
-        return <div className="select-time-at"><h1>At...</h1><SelectList data={timeUnits.hourList} onChange={this.setHour}/><span>:</span><SelectList data={timeUnits.minuteList} onChange={this.setMinute}/></div>;
+      return <div className="select-time-at"><h1>At...</h1><SelectList data={timeUnits.hourList} onChange={this.setHour}/><span>:</span><SelectList data={timeUnits.minuteList} onChange={this.setMinute}/></div>;
     }
   }
   
@@ -86,18 +85,18 @@ class CronSetter extends React.Component {
   
   render() {
     return (
-        <div className={this.state.selectClassName}>
-          <h1>On...</h1>
-          <Button onClick={this.selectEveryWeekDay}>
-              Every weekday
-          </Button>
-          <Button onClick={this.selectDay}>
-              Every...
-          </Button>
-          {this.renderCalendar()}
-          {this.renderTime()}
-          {this.renderCreate()}
-        </div>
+      <div className={this.state.selectClassName}>
+        <h1>On...</h1>
+        <Button onClick={this.selectEveryWeekDay}>
+            Every weekday
+        </Button>
+        <Button onClick={this.selectDay}>
+            Every...
+        </Button>
+        {this.renderCalendar()}
+        {this.renderTime()}
+        {this.renderCreate()}
+      </div>
     );
   }
 }

@@ -49,7 +49,7 @@ var CronModel = (function () {
 
     console.log('config.CMD', _configEnvDev2['default'].CMD);
     return {
-      command: _configEnvDev2['default'].CMD + ' ' + decodeURIComponent(properties.song),
+      command: _configEnvDev2['default'].CMD + ' "' + decodeURIComponent(properties.song) + '"',
       expression: decodeURIComponent(properties.expression),
       comment: 'tb-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
     };
@@ -129,6 +129,22 @@ var CronModel = (function () {
           } else {
             console.log('get job by comment', tab.jobs({ 'comment': comment }));
             resolve(remodelArray(tab.jobs({ 'comment': comment })));
+          }
+        });
+      });
+    }
+  }, {
+    key: 'clearAll',
+    value: function clearAll() {
+      var user = arguments[0] === undefined ? '' : arguments[0];
+
+      return new _promise2['default'](function (resolve, reject) {
+        _crontab2['default'].load(user, function (err, tab) {
+          if (err) {
+            reject(err);
+          } else {
+            tab.reset();
+            resolve(remodelArray(tab.jobs()));
           }
         });
       });

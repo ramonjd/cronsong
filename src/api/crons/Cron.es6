@@ -24,10 +24,8 @@ let Cron  = {
   },
 
   deleteJobByComment(req, res) {
-
     let commentBody = req.params.comment;
     console.log('deleteJobByComment', commentBody);
-
     CronModel.deleteJobByComment(commentBody).then(cron => {
       return res.status(200).json({
         'jobs' : cron
@@ -43,7 +41,16 @@ let Cron  = {
         'jobs' : cron
       });
     });
+  },
+  
+  clearAll(req, res, next) {
+    CronModel.clearAll(newCron).then(cron => {
+      return res.status(200).json({
+        'jobs' : cron
+      });
+    });
   }
+
 
 };
 

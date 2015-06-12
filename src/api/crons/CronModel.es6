@@ -26,7 +26,7 @@ class CronModel {
     constructor(properties = {}) {
     console.log('config.CMD', config.CMD);
       return {
-        command : config.CMD + ' ' + decodeURIComponent(properties.song),
+        command : config.CMD + ' "' + decodeURIComponent(properties.song) + '"',
         expression : decodeURIComponent(properties.expression),
         comment : 'tb-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
       };
@@ -90,6 +90,19 @@ class CronModel {
           }  else { 
           console.log('get job by comment', tab.jobs({'comment' : comment}));
             resolve(remodelArray(tab.jobs({'comment' : comment})));
+          }
+        });
+      });
+    }
+    
+    static clearAll(user = '') {
+      return new Promise((resolve, reject) => {
+        CronTab.load(user, (err, tab) => {
+          if (err) {
+            reject(err);
+          }  else { 
+            tab.reset();
+            resolve(remodelArray(tab.jobs()));
           }
         });
       });
