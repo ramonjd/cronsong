@@ -10,7 +10,8 @@ const DIR = './mp3s/_processed/'
 var remodelArray = (filteredFileArray = []) => {
   return filteredFileArray.map(file => { 
         return {
-          'name' : file
+          'name' : file,
+          'dir' : config.DIR.replace('mp3s/', '')
         };
     });
 };

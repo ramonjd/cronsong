@@ -1,0 +1,17 @@
+{
+  "name": "rpi-media",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ramonjd/rpi-media",
+  "authors": [
+    "Dodd",
+    "Ramon <ramon.dodd@bskyb.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,4 +1,4 @@
-# StandupCrononator
+# CronSong
 -------------
 
 Pick and queue music for your weekly and daily standups. To be run on Raspberry PI
