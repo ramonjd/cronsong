@@ -7,3 +7,5 @@ target/
 .tmp
 dist
 mp3s/*
+app/
+*.*~
