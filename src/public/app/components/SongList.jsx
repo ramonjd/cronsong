@@ -1,4 +1,5 @@
 import React from 'react';
+import AudioPlayer from './AudioPlayer.jsx';
 
 
 class SongList extends React.Component {
@@ -18,6 +19,7 @@ class SongList extends React.Component {
           return (
             <li onClick={boundClick} key={i} ref={'song' + i}>
               {song.name}
+              <AudioPlayer/>
             </li>
           );
         });
