@@ -14,8 +14,6 @@ let Cron  = {
 
   create(req, res, next) {
     var newCron= new CronModel(req.body);
-    console.log('newCron from', req.body);
-    console.log('newCron to', newCron);
     CronModel.create(newCron).then(cron => {
       return res.status(200).json({
         'jobs' : cron
@@ -25,7 +23,6 @@ let Cron  = {
 
   deleteJobByComment(req, res) {
     let commentBody = req.params.comment;
-    console.log('deleteJobByComment', commentBody);
     CronModel.deleteJobByComment(commentBody).then(cron => {
       return res.status(200).json({
         'jobs' : cron
@@ -35,7 +32,6 @@ let Cron  = {
 
   getJobByComment(req, res) {
     let commentBody = req.params.comment;
-    console.log('getJobByComment', commentBody);
     CronModel.getJobByComment(commentBody).then(cron => {
       return res.status(200).json({
         'jobs' : cron

@@ -10,9 +10,9 @@ var remodelArray = (tabs = []) => {
   return tabs.map(tab => { 
         let comment = tab.comment();
         let command = tab.command();
-        if (comment.split('-')[0] === 'tb') {
+        if (comment.split('-')[0] === 'sc') {
           return {
-            'expression' : tab.minute().toString() + tab.hour().toString() + tab.dom().toString() + tab.month().toString() + tab.dow().toString(),
+            'expression' : tab.minute().toString() + ' ' + tab.hour().toString() + ' ' +tab.dom().toString() + ' ' +tab.month().toString() + ' ' +tab.dow().toString(),
             'command' : tab.command(),
             'comment' : tab.comment()
           }
@@ -24,11 +24,10 @@ var remodelArray = (tabs = []) => {
 class CronModel {
 
     constructor(properties = {}) {
-    console.log('config.CMD', config.CMD);
       return {
         command : config.CMD + ' "' + decodeURIComponent(properties.song) + '"',
         expression : decodeURIComponent(properties.expression),
-        comment : 'tb-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
+        comment : 'sc-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
       };
     }
 
