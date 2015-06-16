@@ -6,6 +6,7 @@ var source = require('vinyl-source-stream');
 var less = require('gulp-less');
 var path = require('path');
 var babel = require("gulp-babel");
+var watch  = require('gulp-watch');
 
 //https://gist.github.com/mikaelbr/8425025
 //https://babeljs.io/docs/setup/#gulp
@@ -16,8 +17,7 @@ gulp.task('babel', function () {
 });
 
 
-gulp.task('build', function () {
-  
+gulp.task('build-jsx', function () {  
   var stream = browserify({
     entries: './src/public/app/app.jsx',
     extensions: ['.jsx'],
@@ -44,4 +44,16 @@ gulp.task('copy-html', function() {
     .pipe(gulp.dest('./app/public'));
 });
 
-gulp.task('default', ['styles', 'babel', 'build', 'copy-html']);
+gulp.task('watch', function() {
+    watch('src/public/app/**/*.jsx', function() {
+        gulp.start('build-jsx');
+    });
+    watch('src/public/less/**/*.less', function() {
+        gulp.start('styles');
+    });  
+      watch('src/**/*.es6', function() {
+        gulp.start('babel');
+    }); 
+});
+
+gulp.task('default', ['styles', 'babel', 'build-jsx', 'copy-html', 'watch']);
