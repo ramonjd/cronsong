@@ -14,12 +14,17 @@ https://github.com/kriasoft/react-starter-kit
 http://www.2ality.com/2015/04/webpack-es6.html
 https://github.com/lukehoban/es6features#destructuring
 
-### REACT EXPRESS VIEWS
-https://github.com/reactjs/express-react-views
 
-### FLUX
+### ISOMORPHIC + FLUX
+https://strongloop.com/strongblog/node-js-react-isomorphic-javascript-why-it-matters/
+https://github.com/DavidWells/isomorphic-react-example
+https://scotch.io/tutorials/build-a-real-time-twitter-stream-with-node-and-react-js
+https://scotch.io/tutorials/getting-to-know-flux-the-react-js-architecture
 https://github.com/facebook/flux/blob/master/examples/flux-todomvc/js/components/TodoApp.react.js
 https://egghead.io/lessons/react-flux-overview-and-dispatchers
+
+### REACT EXPRESS VIEWS
+https://github.com/reactjs/express-react-views
 
 ### ES6
 http://codepen.io/bradleyboy/posts/getting-to-know-es6-object-literals
@@ -39,3 +44,11 @@ http://frisbyjs.com/
 https://github.com/ncb000gt/node-cron
 https://github.com/dachev/node-crontab/issues
 Make sure files under exec are executable.
+
+
+
+# Morning standup sounds
+15 8 * * 1-5 /home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/sounds/playme.js
+
+# Afternoon standup sounds
+0 13 * * 1-5 /home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/sounds/playme.js

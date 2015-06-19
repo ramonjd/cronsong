@@ -7,11 +7,11 @@ var less = require('gulp-less');
 var path = require('path');
 var babel = require("gulp-babel");
 var watch  = require('gulp-watch');
+var preprocess = require('gulp-preprocess');
+var clean = require('gulp-clean');
 
-//https://gist.github.com/mikaelbr/8425025
-//https://babeljs.io/docs/setup/#gulp
 gulp.task('babel', function () {
-  return gulp.src('src/**/*.es6')
+  return gulp.src(['!src/templates/*.es6', 'src/**/*.es6'])
     .pipe(babel())
     .pipe(gulp.dest('app'));
 });
@@ -25,10 +25,29 @@ gulp.task('build-jsx', function () {
     transform: [babelify],
     fullPaths: false
   });
-
   return stream.bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('./app/public/js/'));
+});
+
+
+gulp.task('clean', function () {
+    return gulp.src('app/', {read: false})
+        .pipe(clean());
+});
+
+
+gulp.task('env-dev', function() {
+  gulp.src('./src/templates/env.es6')
+    .pipe(preprocess({extension : 'js', context: { NODE_ENV: 'development', DEBUG: true}})) 
+    .pipe(gulp.dest('./src/config/'));
+});
+
+
+gulp.task('env-prod', function() {
+  gulp.src('./src/config/env.es6')
+    .pipe(preprocess({extension : 'js', context: { NODE_ENV: 'production', DEBUG: false}})) 
+    .pipe(gulp.dest('./src/config/'));
 });
 
 
@@ -56,4 +75,6 @@ gulp.task('watch', function() {
     }); 
 });
 
-gulp.task('default', ['styles', 'babel', 'build-jsx', 'copy-html', 'watch']);
+gulp.task('build', ['styles', 'babel', 'build-jsx', 'copy-html']);
+gulp.task('dist', ['clean', 'env-prod', 'build']);
+gulp.task('default', ['env-dev',  'build', 'watch']);

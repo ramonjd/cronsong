@@ -1,6 +1,6 @@
 import CronTab from 'crontab';
 import Promise from 'promise';
-import config from '../../config/env/dev';
+import config from '../../config/env';
 
 //https://github.com/dachev/node-crontab/blob/master/test/runner.js
 // http://www.sebastianseilund.com/nodejs-async-in-practice
@@ -8,13 +8,15 @@ import config from '../../config/env/dev';
 
 var remodelArray = (tabs = []) => {
   return tabs.map(tab => { 
-        let comment = tab.comment();
-        let command = tab.command();
-        if (comment.split('-')[0] === 'sc') {
-          return {
-            'expression' : tab.minute().toString() + ' ' + tab.hour().toString() + ' ' +tab.dom().toString() + ' ' +tab.month().toString() + ' ' +tab.dow().toString(),
-            'command' : tab.command(),
-            'comment' : tab.comment()
+        if (tab) {
+          let comment = tab.comment();
+          let command = tab.command();
+          if (comment.split('-')[0] === 'sc') {
+            return {
+              'expression' : tab.minute().toString() + ' ' + tab.hour().toString() + ' ' +tab.dom().toString() + ' ' +tab.month().toString() + ' ' +tab.dow().toString(),
+              'command' : tab.command(),
+              'comment' : tab.comment()
+            }
           }
         }
     });
@@ -31,7 +33,7 @@ class CronModel {
       };
     }
 
-    static show(user = '') {
+    static show(user = config.USER) {
       return new Promise((resolve, reject) => {
         CronTab.load(user, (err, tab) =>  {
           if (err) {
@@ -43,7 +45,7 @@ class CronModel {
       });
     }
     
-    static create(cron = {}, user = '') {
+    static create(cron = {}, user = config.USER) {
       return new Promise(function (resolve, reject) {
           CronTab.load(user, (err, tab) =>  {
             if (err) {
@@ -62,7 +64,7 @@ class CronModel {
         });
     }
 
-    static deleteJobByComment(comment = '', user = '') {
+    static deleteJobByComment(comment = '', user = config.USER) {
      return new Promise((resolve, reject) => {
         CronTab.load(user, (err, tab) =>  {
           if (err) {
@@ -81,20 +83,19 @@ class CronModel {
       });
     }
     
-    static getJobByComment(comment = '', user = '') {
+    static getJobByComment(comment = '', user = config.USER) {
       return new Promise((resolve, reject) => {
         CronTab.load(user, (err, tab) => {
           if (err) {
             reject(err);
           }  else { 
-          console.log('get job by comment', tab.jobs({'comment' : comment}));
             resolve(remodelArray(tab.jobs({'comment' : comment})));
           }
         });
       });
     }
     
-    static clearAll(user = '') {
+    static clearAll(user = config.USER) {
       return new Promise((resolve, reject) => {
         CronTab.load(user, (err, tab) => {
           if (err) {

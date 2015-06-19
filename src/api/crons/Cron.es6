@@ -1,6 +1,5 @@
 import CronModel from './CronModel';
 
-let user = 'skyid';
 
 let Cron  = {
 
