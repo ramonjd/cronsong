@@ -19,6 +19,14 @@ let Actions = {
     });
   },
   
+    
+  playSong(data) {
+    AppDispatcher.dispatch({
+      actionType: Constants.PLAY_SONG,
+      data: data
+    });
+  },
+  
   // cron actions
   
   getCrons(data) {

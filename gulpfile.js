@@ -57,10 +57,11 @@ gulp.task('styles', function() {
         .pipe(gulp.dest('./.tmp/public/css'));
 });
 
-gulp.task('copy-html', function() {
+gulp.task('copy', function() {
     gulp.src('./src/public/index.html')
     // Perform minification tasks, etc here
     .pipe(gulp.dest('./.tmp/public'));
+  
 });
 
 gulp.task('watch', function() {
@@ -75,6 +76,6 @@ gulp.task('watch', function() {
     }); 
 });
 
-gulp.task('build', ['styles', 'babel', 'build-jsx', 'copy-html']);
+gulp.task('build', ['styles', 'babel', 'build-jsx', 'copy']);
 gulp.task('dist', ['clean', 'env-prod', 'build']);
 gulp.task('default', ['env-dev',  'build', 'watch']);

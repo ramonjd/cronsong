@@ -5,6 +5,7 @@ let constants = keyMirror({
   CREATE_CRON: null,
   DELETE_CRON: null,
   LOAD_SONGS: null,
+  PLAY_SONG: null,
   LOAD_SOUNDS: null,
   CHANGE_UI: null
 });

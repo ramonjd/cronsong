@@ -15,6 +15,7 @@ class SongManager extends React.Component {
     this.showList = this.showList.bind(this);
     this.showRandom = this.showRandom.bind(this);
     this.selectSong = this.selectSong.bind(this);
+    this.playSong = this.playSong.bind(this);
     this.createSongCron = this.createSongCron.bind(this);
     this.onChange = this.onChange.bind(this);
     
@@ -49,6 +50,12 @@ class SongManager extends React.Component {
     });
   }
 
+  playSong(i = 0) {
+    let selectedSong = this.state.data[i].name;
+    console.log('SongManager', selectedSong);
+    Actions.playSong(selectedSong);
+  }
+  
   showList() {
     Actions.getSongs();
     this.setState({
@@ -81,7 +88,7 @@ class SongManager extends React.Component {
 
   renderSongList(){
     if ( this.state.showSongList === true) {
-      return <SongList data={this.state.data} onSelect={this.selectSong}/>;
+      return <SongList data={this.state.data} onSelect={this.selectSong} onPlay={this.playSong}/>;
     }
   }
   

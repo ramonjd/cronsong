@@ -6,6 +6,8 @@ import assign from 'object-assign';
 
 let EventEmitter = events.EventEmitter;
 let CHANGE_EVENT = 'change';
+let SONG_PLAYED_EVENT = 'songPlayed';
+
 let _songs = [];
 
 
@@ -17,12 +19,22 @@ let SongStore  = assign({}, EventEmitter.prototype, {
     .get(_url)
     .end((err, res) => {
        _songs = JSON.parse(res.text);
-       this.emitChange(_songs);
+       this.emitChange(CHANGE_EVENT, _songs);
+    });
+  },
+  
+  playSong(data) {
+    let _url = 'api/songs/play/' + data;
+    Request
+    .get(_url)
+    .end((err, res) => {
+       _songs = JSON.parse(res.text);
+       this.emitChange(SONG_PLAYED_EVENT, _songs);
     });
   },
 
-  emitChange(data) {
-    this.emit(CHANGE_EVENT, data);
+  emitChange(event, data) {
+    this.emit(event, data);
   },
   
   addChangeListener(callback) {
@@ -31,6 +43,13 @@ let SongStore  = assign({}, EventEmitter.prototype, {
   
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  },
+  addSongPlayedListener(callback) {
+    this.on(SONG_PLAYED_EVENT, callback);
+  },
+  
+  removeSongPlayedListener(callback) {
+    this.removeListener(SONG_PLAYED_EVENT, callback);
   }
   
 });
@@ -39,6 +58,9 @@ AppDispatcher.register((payload) => {
   switch(payload.actionType) {
     case Constants.LOAD_SONGS:
       SongStore.getSongs(payload.data);
+      break;
+    case Constants.PLAY_SONG:
+      SongStore.playSong(payload.data);
       break;
     default:
       return true;
