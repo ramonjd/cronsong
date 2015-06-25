@@ -74,6 +74,10 @@ gulp.task('watch', function() {
       watch('src/**/*.es6', function() {
         gulp.start('babel');
     }); 
+  
+     watch('src/public/index.html', function() {
+        gulp.start('copy');
+    });
 });
 
 gulp.task('build', ['styles', 'babel', 'build-jsx', 'copy']);

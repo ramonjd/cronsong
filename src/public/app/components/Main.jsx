@@ -21,15 +21,13 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);    
     this.onUIChange = this.onUIChange.bind(this);    
     this.toggleSection = this.toggleSection.bind(this);    
   }
 
   componentDidMount() {
       Store.addUIChangeListener(this.onUIChange);
-      Actions.setUI('song');
+      Actions.ui.set('song');
       this.state = getState();
   }
 
@@ -42,7 +40,7 @@ class Main extends React.Component {
   } 
   
   toggleSection(sectionId){
-    Actions.setUI(sectionId);
+    Actions.ui.set(sectionId);
   }
   
   render() {

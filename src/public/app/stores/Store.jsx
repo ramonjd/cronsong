@@ -52,6 +52,7 @@ let Store  = assign({}, EventEmitter.prototype, {
     this.emit(event, data);
   },
   
+  
 });
 
 AppDispatcher.register((payload) => {

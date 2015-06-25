@@ -15,8 +15,8 @@ class SongList extends React.Component {
             let labelClick = this.props.onPlay.bind(this, i);
             return (
               <li key={i} ref={'song' + i}>
-                <span onClick={boundClick}>{song.name}</span>
-                <button type="button" className="btn btn-success btn-xs" onClick={labelClick}>Play</button>
+                <span className="song-name" onClick={boundClick}>{song.name}</span>
+                <span className="btn-success" onClick={labelClick}>Play</span>
               </li>
             );
           });

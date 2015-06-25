@@ -26,8 +26,10 @@ var remodelArray = (tabs = []) => {
 class CronModel {
 
     constructor(properties = {}) {
+      let type = decodeURIComponent(properties.type);
+      let cmd = type === 'sound' ? config.CMD_SOUND : config.CMD_SONG
       return {
-        command : config.CMD + ' "' + decodeURIComponent(properties.song) + '"',
+        command : cmd + ' "' + decodeURIComponent(properties.song) + '"',
         expression : decodeURIComponent(properties.expression),
         comment : 'sc-' + decodeURIComponent(properties.song) + '-' + Math.floor(new Date() / 1000)
       };

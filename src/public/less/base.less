@@ -42,8 +42,7 @@ ul {
   margin:20px 0;
   li {
     list-style: none;
-    margin: .4em;
-    padding: 1em;
+    position:relative;
     cursor: pointer;
     background: #e1e1e1;
     text-decoration: none;
@@ -64,10 +63,20 @@ ul {
     transition-property: color;
     -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
-    span {
-      display:block;
+    span.song-name,
+    span.btn-success {
+      display:inline-block;
       font-weight: 700;
+      margin-right: 20px;
+      padding: 1em;
     }
+    
+    span.btn-success {
+        height:100%;
+        text-align: center;
+        width:60px;
+        margin-right: 0;
+      }
     &:before {
       content: "";
       position: absolute;
@@ -98,6 +107,10 @@ ul {
   }
 }
 
+.divider {
+  margin-right:10px;
+}
+
 .create-cron {
   button {
     color: #fff;
@@ -108,14 +121,16 @@ ul {
 }
 
 .cron-list {
-
+  li {
+    padding:1em;
+  }
   button {
     padding: 1px 5px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px;
     color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
+    background-color: #d9534f;
+    border-color: #d43f3a;
   }
 }

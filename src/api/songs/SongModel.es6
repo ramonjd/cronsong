@@ -1,5 +1,5 @@
 import fs from 'fs';
-import play from '../../exec/play';
+import play from '../../exec/playSong';
 import {ran} from '../../utils/Utils';
 import {filterMp3} from '../../utils/Utils';
 import {filterByIndex} from '../../utils/Utils';
@@ -31,7 +31,6 @@ class SongModel {
     
     static play(song = '', callback = function(){}) {
         let songPath = config.DIR_SONGS + song;
-        console.log('SongModel', song);
         play(song);
         callback(remodelArray([songPath]));
     }

@@ -6,30 +6,35 @@ import CronSetter from './CronSetter.jsx';
 import Actions from '../actions/Actions.jsx';
 import SongStore from '../stores/SongStore.jsx';
 
+let AUDIO_TYPES = {
+    
+    song : 'song',
+    random : 'random',
+    sound : 'sound'
+  
+};
+
+let SELECTED_AUDIO_TYPE = AUDIO_TYPES.song;
 
 class SongManager extends React.Component {
   
   constructor() {
     super();
+    this.state = {
+      data : []
+    };
     
-    this.showList = this.showList.bind(this);
-    this.showRandom = this.showRandom.bind(this);
+    this.showSection = this.showSection.bind(this);
     this.selectSong = this.selectSong.bind(this);
     this.playSong = this.playSong.bind(this);
     this.createSongCron = this.createSongCron.bind(this);
+    this.renderSongList = this.renderSongList.bind(this);
     this.onChange = this.onChange.bind(this);
-    
-    this.state = {
-      showCronSetter : false,
-      showSongList : false,
-      random : false,
-      data : []
-    };
-   
+
   }
   
   componentDidMount(){
-     SongStore.addChangeListener(this.onChange);
+    SongStore.addChangeListener(this.onChange);
   }
   
   componentWillUnmount() {
@@ -52,58 +57,55 @@ class SongManager extends React.Component {
 
   playSong(i = 0) {
     let selectedSong = this.state.data[i].name;
-    console.log('SongManager', selectedSong);
-    Actions.playSong(selectedSong);
+    Actions[SELECTED_AUDIO_TYPE].play(selectedSong);
   }
+
   
-  showList() {
-    Actions.getSongs();
-    this.setState({
-      showCronSetter : false,
-      showSongList : true,
-      random : false
-     });
+  showSection(type) {
+    console.log(type);
+    SELECTED_AUDIO_TYPE = AUDIO_TYPES[type];
+    Actions[SELECTED_AUDIO_TYPE].get();
   }
 
-  showRandom() {
-    Actions.getSongs({random: true});
-    this.setState({
-      showCronSetter : true,
-      showSongList : false,
-      random : true
-    });
-  }
 
+  // need to differentiate between song and sound
   createSongCron(cron){
-    cron.song = this.state.random ? 'random' : this.state.data[0].name;
-    Actions.createCron(cron);  
-    Actions.setUI('cron');
+    cron.song = SELECTED_AUDIO_TYPE ? 'random' : this.state.data[0].name;
+    Actions.cron.create(cron);  
+    Actions.ui.setUI('cron');
   } 
   
   renderCronSetter(){
-    if ( this.state.showCronSetter === true) {
-      return <CronSetter onCreateCronHandler={this.createSongCron} />;
-    }
+    return (
+      <CronSetter onCreateCronHandler={this.createSongCron} />
+    );
   }
 
   renderSongList(){
-    if ( this.state.showSongList === true) {
-      return <SongList data={this.state.data} onSelect={this.selectSong} onPlay={this.playSong}/>;
-    }
+    return (
+        <SongList data={this.state.data} onSelect={this.selectSong} onPlay={this.playSong}/>
+      );
   }
   
-  
   render() {
-    let showListClass = this.state.showSongList === true ? 'active' : '';
-    let showRandomClass = this.state.random === true ? 'active' : '';
+    
+    let showSongListClass = SELECTED_AUDIO_TYPE === 'song' ? 'active' : '';
+    let showSoundListClass = SELECTED_AUDIO_TYPE === 'sound' ? 'active' : '';
+    let showRandomClass = SELECTED_AUDIO_TYPE === 'random' ? 'active' : '';
+
     return (
         <div className='songManager'>
           <h2>Play...</h2>
-          <Button className={showListClass} onClick={this.showList}>
+          <Button className={showSongListClass} onClick={this.showSection.bind(this, 'song')}>
             A song
           </Button>
-          <Button className={showRandomClass} onClick={this.showRandom}>
+          <strong className="divider">or</strong>
+          <Button className={showRandomClass} onClick={this.showSection.bind(this, 'random')}>
             A random song
+          </Button>
+          <strong className="divider">or</strong>
+          <Button className={showSoundListClass} onClick={this.showSection.bind(this, 'sound')}>
+            A Sound
           </Button>
           {this.renderSongList()}
           {this.renderCronSetter()} 
