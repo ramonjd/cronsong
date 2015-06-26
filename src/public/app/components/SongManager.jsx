@@ -14,23 +14,29 @@ let AUDIO_TYPES = {
   
 };
 
-let SELECTED_AUDIO_TYPE = AUDIO_TYPES.song;
+let PLAYING = false;
+
+
+function getState() {
+  return {
+    data : [],
+    showCronSetter: false,
+    selectedAudioType  : null
+  };
+}
 
 class SongManager extends React.Component {
   
   constructor() {
     super();
-    this.state = {
-      data : []
-    };
-    
+    this.state = getState();
     this.showSection = this.showSection.bind(this);
     this.selectSong = this.selectSong.bind(this);
     this.playSong = this.playSong.bind(this);
-    this.createSongCron = this.createSongCron.bind(this);
+    this.stopSong = this.stopSong.bind(this);
+    this.createCron = this.createCron.bind(this);
     this.renderSongList = this.renderSongList.bind(this);
     this.onChange = this.onChange.bind(this);
-
   }
   
   componentDidMount(){
@@ -38,12 +44,14 @@ class SongManager extends React.Component {
   }
   
   componentWillUnmount() {
+    this.setState(getState());
     SongStore.removeChangeListener(this.onChange);
   }
   
   onChange(songsArray) { 
      this.setState({
-      data: songsArray
+      data: songsArray,
+      showCronSetter : this.state.selectedAudioType === 'random' ? true : false
     });
   }
   
@@ -56,45 +64,56 @@ class SongManager extends React.Component {
   }
 
   playSong(i = 0) {
+    Actions[this.state.selectedAudioType].stop();
     let selectedSong = this.state.data[i].name;
-    Actions[SELECTED_AUDIO_TYPE].play(selectedSong);
+    Actions[this.state.selectedAudioType].play(selectedSong);
   }
 
+  stopSong() {
+    if (this.state.selectedAudioType && this.state.selectedAudioType !== 'random') {
+      Actions[this.state.selectedAudioType].stop();
+    }
+  }
   
   showSection(type) {
-    console.log(type);
-    SELECTED_AUDIO_TYPE = AUDIO_TYPES[type];
-    Actions[SELECTED_AUDIO_TYPE].get();
+    this.setState({
+      selectedAudioType : AUDIO_TYPES[type],
+      showCronSetter : this.state.selectedAudioType === 'random' ? true : false
+    });
+    console.log('this.state', this.state);
+    Actions[AUDIO_TYPES[type]].get();
   }
 
 
   // need to differentiate between song and sound
-  createSongCron(cron){
-    cron.song = SELECTED_AUDIO_TYPE ? 'random' : this.state.data[0].name;
+  createCron(cron){
+    cron.song = this.state.selectedAudioType === 'random' ? this.state.selectedAudioType : this.state.data[0].name;
+    cron.audioType = this.state.selectedAudioType;
     Actions.cron.create(cron);  
-    Actions.ui.setUI('cron');
+    Actions.ui.set('cron');
   } 
   
   renderCronSetter(){
     return (
-      <CronSetter onCreateCronHandler={this.createSongCron} />
+      <CronSetter onCreateCronHandler={this.createCron} />
     );
   }
 
   renderSongList(){
     return (
-        <SongList data={this.state.data} onSelect={this.selectSong} onPlay={this.playSong}/>
-      );
+      <SongList data={this.state.data} onSelect={this.selectSong} onPlay={this.playSong} onStop={this.stopSong}/>
+    );
   }
   
   render() {
     
-    let showSongListClass = SELECTED_AUDIO_TYPE === 'song' ? 'active' : '';
-    let showSoundListClass = SELECTED_AUDIO_TYPE === 'sound' ? 'active' : '';
-    let showRandomClass = SELECTED_AUDIO_TYPE === 'random' ? 'active' : '';
+    let showSongListClass = this.state.selectedAudioType === 'song' ? 'active' : '';
+    let showSoundListClass = this.state.selectedAudioType === 'sound' ? 'active' : '';
+    let showRandomClass = this.state.selectedAudioType === 'random' ? 'active' : '';
+    let cronSetter = this.state.showCronSetter === true ? this.renderCronSetter() : null;
 
     return (
-        <div className='songManager'>
+        <section>
           <h2>Play...</h2>
           <Button className={showSongListClass} onClick={this.showSection.bind(this, 'song')}>
             A song
@@ -108,8 +127,8 @@ class SongManager extends React.Component {
             A Sound
           </Button>
           {this.renderSongList()}
-          {this.renderCronSetter()} 
-        </div>
+          {cronSetter} 
+        </section>
     );
   }
 }

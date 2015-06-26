@@ -29,5 +29,6 @@ export function filterByIndex(thisArray = [], index){
 };
 
 export function execute(str) {
+  console.log('execute: ', str);
   exec(str, puts);
 }

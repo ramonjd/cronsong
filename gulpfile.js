@@ -37,6 +37,8 @@ gulp.task('clean', function () {
 });
 
 
+
+
 gulp.task('env-dev', function() {
   gulp.src('./src/templates/env.es6')
     .pipe(preprocess({extension : 'js', context: { NODE_ENV: 'development', DEBUG: true}})) 
@@ -45,7 +47,7 @@ gulp.task('env-dev', function() {
 
 
 gulp.task('env-prod', function() {
-  gulp.src('./src/config/env.es6')
+  gulp.src('./src/templates/env.es6')
     .pipe(preprocess({extension : 'js', context: { NODE_ENV: 'production', DEBUG: false}})) 
     .pipe(gulp.dest('./src/config/'));
 });
@@ -54,13 +56,13 @@ gulp.task('env-prod', function() {
 gulp.task('styles', function() {
     gulp.src(['./src/public/less/**/*.less'])
         .pipe(less())
-        .pipe(gulp.dest('./.tmp/public/css'));
+        .pipe(gulp.dest('.tmp/public/css'));
 });
 
 gulp.task('copy', function() {
     gulp.src('./src/public/index.html')
     // Perform minification tasks, etc here
-    .pipe(gulp.dest('./.tmp/public'));
+    .pipe(gulp.dest('.tmp/public'));
   
 });
 

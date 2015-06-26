@@ -20,7 +20,7 @@ class CronManager extends React.Component {
   
   componentDidMount(){
     CronStore.addChangeListener(this.onChange);
-    Actions.getCrons(); 
+    Actions.cron.get(); 
   }
   
   componentWillUnmount() {
@@ -34,7 +34,7 @@ class CronManager extends React.Component {
   }
   
   deleteCron(cronComment){
-    Actions.deleteCron({
+    Actions.cron.delete({
       comment : cronComment
     })
   }

@@ -14,12 +14,19 @@ let _songs = [];
 let SongStore  = assign({}, EventEmitter.prototype, {
 
   getSongs(data = {}) {
-    let _url = data && data.random === true ? 'api/songs/random' : 'api/songs';
     Request
-    .get(_url)
+    .get('api/songs')
     .end((err, res) => {
        _songs = JSON.parse(res.text);
        this.emitChange(CHANGE_EVENT, _songs);
+    });
+  },
+  
+  getRandomSong(data = {}) {
+    Request
+    .get('api/songs/random')
+    .end((err, res) => {
+       this.emitChange(CHANGE_EVENT, []);
     });
   },
 
@@ -55,6 +62,19 @@ let SongStore  = assign({}, EventEmitter.prototype, {
     });
   },
   
+  stopSong(){
+    console.log('song store quit');
+    Request.get('/api/songs/stop')
+      .end((err, res) => {
+      });;
+  
+  },
+  stopSound(){
+    Request.get('api/sounds/stop')
+      .end((err, res) => {
+    });;
+  },
+  
   emitChange(event, data) {
     this.emit(event, data);
   },
@@ -87,8 +107,14 @@ AppDispatcher.register((payload) => {
     case Constants.PLAY_SONG:
       SongStore.playSong(payload.data);
       break;
+    case Constants.STOP_SONG:
+      SongStore.stopSong();
+      break;
+    case Constants.STOP_SOUND:
+      SongStore.stopSound();
+      break;
     case Constants.LOAD_RANDOM_SONG:
-      SongStore.getSongs({random:true});
+      SongStore.getRandomSong();
       break;            
     case Constants.PLAY_SOUND:
       SongStore.playSound(payload.data);

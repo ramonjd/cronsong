@@ -3,13 +3,10 @@ import SelectList from './SelectList.jsx';
 import Button from './Button.jsx';
 import timeUnits from '../constants/timeUnits.js';
 
-
-
 let cronPattern = '%minute% %hour% * * %day%';
 
 class CronSetter extends React.Component {
-  
-  
+
   constructor() {
     super();
       this.state = {
@@ -68,19 +65,32 @@ class CronSetter extends React.Component {
   
   renderTime(){
     if (this.state.showSelectTime === true) {
-      return <div className="select-time-at"><h1>At...</h1><SelectList data={timeUnits.hourList} onChange={this.setHour}/><span>:</span><SelectList data={timeUnits.minuteList} onChange={this.setMinute}/></div>;
+      return (
+        <div className="select-time-at">
+          <h1>At...</h1>
+          <SelectList data={timeUnits.hourList} onChange={this.setHour}/>
+          <span>:</span>
+          <SelectList data={timeUnits.minuteList} onChange={this.setMinute}/>
+        </div>
+      );
     }
   }
   
  renderCalendar(){
     if (this.state.showSelectDay === true) {
-        return <SelectList data={timeUnits.dayList} onChange={this.setDay}/>;
+        return (
+          <SelectList data={timeUnits.dayList} onChange={this.setDay}/>
+        );
     }
   }
   
   renderCreate(){
     if (this.state.showSelectTime === true) {
-        return <div className="create-cron"><Button onClick={this.createCron}>Create cron</Button></div>;
+        return (
+          <div className="create-cron">
+            <Button onClick={this.createCron}>Create cron</Button>
+          </div>
+        );
     }
   }
   
@@ -88,9 +98,9 @@ class CronSetter extends React.Component {
     
       let selectEveryWeekDayClass = this.state.showSelectEveryWeekDay === true ? 'active' : '';
       let selectDayClass = this.state.showSelectDay === true ? 'active' : '';
+    
     return (
-
-      <div className={this.state.selectClassName}>
+      <div>
         <h1>On...</h1>
         <Button className={selectEveryWeekDayClass} onClick={this.selectEveryWeekDay}>
             Every weekday

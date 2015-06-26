@@ -30,6 +30,7 @@ let CronStore  = assign({}, EventEmitter.prototype, {
       .type('form')
       .send({'expression' : encodeURIComponent(data.expression)})
       .send({'song' : encodeURIComponent(data.song)})
+      .send({'audioType' : encodeURIComponent(data.audioType)})
       .end((err, res) => {
         _crons = JSON.parse(res.text);
          this.emitChange({
@@ -38,7 +39,6 @@ let CronStore  = assign({}, EventEmitter.prototype, {
          });
       });
   },
-  
   
    deleteCron(data) {
      Request

@@ -8,7 +8,9 @@ let constants = keyMirror({
   PLAY_SONG: null,
   LOAD_RANDOM_SONG: null,
   LOAD_SOUNDS: null,
-  CHANGE_UI: null
+  CHANGE_UI: null,
+  STOP_SOUND:null,
+  STOP_SONG:null
 });
 
 export default constants;

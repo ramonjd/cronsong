@@ -20,6 +20,13 @@ let Song  = {
     SongModel.play(song, song => {
       return res.status(200).json(song);
     });
+  },
+  
+ stop(req, res) {
+     console.log('Song stop');
+    SongModel.stop();
+    return res.status(204).json({});
+    next();
   }
 
 };

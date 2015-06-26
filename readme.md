@@ -1,7 +1,8 @@
 # CronSong
 -------------
 
-Pick and queue music for your weekly and daily standups. To be run on Raspberry PI
+Pick and queue music for your weekly and daily standups. To be run on Raspberry PI, but values can be swapped to suit any linux environment
+
 
 ## Reference materials
 
@@ -44,11 +45,3 @@ http://frisbyjs.com/
 https://github.com/ncb000gt/node-cron
 https://github.com/dachev/node-crontab/issues
 Make sure files under exec are executable.
-
-
-
-# Morning standup sounds
-15 8 * * 1-5 /home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/sounds/playme.js
-
-# Afternoon standup sounds
-0 13 * * 1-5 /home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/sounds/playme.js
