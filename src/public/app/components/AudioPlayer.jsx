@@ -12,7 +12,9 @@ class AudioPlayer extends React.Component {
         let songPath = this.props.song.dir + this.props.song.name;
         this.songRef = this.props.song.name.replace(/\./g, '');  
         return (
-              <audio src={songPath} type="audio/mpeg" preload="auto" controls ref={this.songRef}></audio>
+              <div className="alert alert-info">
+                <audio src={songPath} type="audio/mpeg" preload="auto" controls></audio>
+              <div>
         );
     }
 }
