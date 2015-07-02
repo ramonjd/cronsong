@@ -1,2 +1,2 @@
-import CONSTANTS from './env/prod';
+import CONSTANTS from './env/dev';
 export default CONSTANTS;

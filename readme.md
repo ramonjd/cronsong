@@ -3,6 +3,17 @@
 
 Pick and queue music for your weekly and daily standups. To be run on Raspberry PI, but values can be swapped to suit any linux environment
 
+Build
+
+```shell
+gulp
+```
+
+then run server
+
+```shell
+node .tmp/app.js
+```
 
 ## Reference materials
 

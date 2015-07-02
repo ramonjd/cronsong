@@ -18,36 +18,14 @@ let Actions = {
         actionType: Constants.LOAD_SONGS,
         data: data
       });
-    },
-    play(data = {}) {
-      AppDispatcher.dispatch({
-        actionType: Constants.PLAY_SONG,
-        data: data
-      });
-    },
-    stop() {
-      AppDispatcher.dispatch({
-        actionType: Constants.STOP_SONG
-      });
     }
   },
   
   sound : {
-    play(data = {}) {
-      AppDispatcher.dispatch({
-        actionType: Constants.PLAY_SOUND,
-        data: data
-      });
-    },
     get(data = {}) {
       AppDispatcher.dispatch({
         actionType: Constants.LOAD_SOUNDS,
         data: data
-      });
-    },
-    stop() {
-      AppDispatcher.dispatch({
-        actionType: Constants.STOP_SOUND
       });
     }
   },
@@ -80,7 +58,31 @@ let Actions = {
         data: data
       });
     }
-  }
+  },
+  
+  play(data = {}) {
+      data.action = 'play'
+      AppDispatcher.dispatch({
+        actionType: Constants.AUDIO_CHANGE_EVENT,
+        data: data
+      });
+    },
+    stop() {
+      AppDispatcher.dispatch({
+        actionType: Constants.AUDIO_CHANGE_EVENT,
+        data: {
+          action : 'stop'
+        }
+      });
+    },
+    close() {
+      AppDispatcher.dispatch({
+        actionType: Constants.AUDIO_CHANGE_EVENT,
+        data: {
+          action : 'close'
+        }
+      });
+    }
 };
 
 export default Actions;

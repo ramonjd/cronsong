@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 routes(app);
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/mp3s')));
+app.use(express.static(path.join(__dirname, '../audio')));
 
 
 server.listen('8888', '0.0.0.0', function () {

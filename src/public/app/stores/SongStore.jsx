@@ -39,41 +39,7 @@ let SongStore  = assign({}, EventEmitter.prototype, {
        this.emitChange(CHANGE_EVENT, _songs);
     });
   },
-  
-  playSong(data) {
-    let _url = 'api/songs/play/' + data;
-    Request
-    .get(_url)
-    .end((err, res) => {
-       _songs = JSON.parse(res.text);
-       this.emitChange(SONG_PLAYED_EVENT, _songs);
-    });
-  },
 
-  
-  playSound(data) {
-    console.log('SongStore: api/sounds/play/' + data);
-    let _url = 'api/sounds/play/' + data;
-    Request
-    .get(_url)
-    .end((err, res) => {
-       _songs = JSON.parse(res.text);
-       this.emitChange(SONG_PLAYED_EVENT, _songs);
-    });
-  },
-  
-  stopSong(){
-    console.log('song store quit');
-    Request.get('/api/songs/stop')
-      .end((err, res) => {
-      });;
-  
-  },
-  stopSound(){
-    Request.get('api/sounds/stop')
-      .end((err, res) => {
-    });;
-  },
   
   emitChange(event, data) {
     this.emit(event, data);
@@ -85,14 +51,9 @@ let SongStore  = assign({}, EventEmitter.prototype, {
   
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
-  addSongPlayedListener(callback) {
-    this.on(SONG_PLAYED_EVENT, callback);
-  },
-  
-  removeSongPlayedListener(callback) {
-    this.removeListener(SONG_PLAYED_EVENT, callback);
   }
+  
+
   
 });
 
@@ -104,21 +65,9 @@ AppDispatcher.register((payload) => {
     case Constants.LOAD_SOUNDS:
       SongStore.getSounds(payload.data);
       break;
-    case Constants.PLAY_SONG:
-      SongStore.playSong(payload.data);
-      break;
-    case Constants.STOP_SONG:
-      SongStore.stopSong();
-      break;
-    case Constants.STOP_SOUND:
-      SongStore.stopSound();
-      break;
     case Constants.LOAD_RANDOM_SONG:
       SongStore.getRandomSong();
       break;            
-    case Constants.PLAY_SOUND:
-      SongStore.playSound(payload.data);
-      break;
     default:
       return true;
   }

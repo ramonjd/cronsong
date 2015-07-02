@@ -8,6 +8,7 @@ import assign from 'object-assign';
 let EventEmitter = events.EventEmitter;
 
 let UI_CHANGE_EVENT = 'uiChange';
+let AUDIO_CHANGE_EVENT ='audioChange'
 
 let _header = null;
 let _footer = null;
@@ -48,9 +49,18 @@ let Store  = assign({}, EventEmitter.prototype, {
   removeUIChangeListener: function (callback) {
       this.removeListener(UI_CHANGE_EVENT, callback);
   },
+  
+  addAudioChangeListener(callback) {
+    this.on(AUDIO_CHANGE_EVENT, callback);
+  },
+  
+  removeAudioChangeListener(callback) {
+    this.removeListener(AUDIO_CHANGE_EVENT, callback);
+  },
+  
   emitChange(event, data = {}) {
     this.emit(event, data);
-  },
+  }
   
   
 });
@@ -60,7 +70,10 @@ AppDispatcher.register((payload) => {
     case Constants.CHANGE_UI:
       changeUI(payload.ui);
       Store.emitChange(UI_CHANGE_EVENT);
-	  break;        
+	  break;     
+    case Constants.CHANGE_AUDIO:
+      Store.emitChange(AUDIO_CHANGE_EVENT, payload.data);
+      break;
     default:
       return true;
   }

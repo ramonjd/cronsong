@@ -1,4 +1,6 @@
 import React from 'react';
+import Actions from '../actions/Actions.jsx';
+import Store from '../stores/Store.jsx';
 
 
 function getState() {
@@ -15,59 +17,76 @@ class SongList extends React.Component {
      super();
      this.state = getState();
      this.togglePlayer = this.togglePlayer.bind(this);    
+         this.onAudioChange = this.onAudioChange.bind(this);
+
    }
   
   componentDidMount(){
-  }
+    Store.addAudioChangeListener(this.onAudioChange);
+  } 
   
   componentWillUnmount() {
-    this.props.onStop();
     this.setState(getState());
+    Store.removeAudioChangeListener(this.onAudioChange);
   }
   
-    togglePlayer(i){
-        //let listNode =  React.findDOMNode(this.refs['song' + i]);
-        // if playing and same elem is clicked
-        // stop
-        if (this.state.song === i && this.state.playing === true) {
-            this.props.onStop();
-            this.setState({
-              playing :false,
-              song : null
-            });
-          return;
-        }
-         // if playing and different elem is clicked
-        // stop and play new elem
-        if (this.state.playing === true) {
-            this.props.onStop();
-            this.setState({
-              playing :false,
-              song : null
-            });
-            setTimeout(function(){
-            this.setState({
-              playing :true,
-              song : i
-            });
-            this.props.onPlay(i);
-            }.bind(this), 500);
-          return;
-        }  
-      
-        // if stopped, play
-        // stop and play new elem
-        if (this.state.playing === false) {
-            setTimeout(function(){
-            this.setState({
-              playing :true,
-              song : i
-            });
-            this.props.onPlay(i);
-            }.bind(this), 500);
-          return;
-        }  
+  
+  onAudioChange(data) { 
+    if (data.action === 'close') {
+        this.setState({
+          playing :false,
+          song : null
+        });
     }
+  }
+  
+  togglePlayer(i){
+    
+    let song = this.props.data[i];
+
+   
+      //let listNode =  React.findDOMNode(this.refs['song' + i]);
+      // if playing and same elem is clicked
+      // stop
+      if (this.state.song === i && this.state.playing === true) {
+          this.props.onStop();
+          this.setState({
+            playing :false,
+            song : null
+          });
+        return;
+      }
+       // if playing and different elem is clicked
+      // stop and play new elem
+      if (this.state.playing === true) {
+          this.props.onStop();
+          this.setState({
+            playing :false,
+            song : null
+          });
+          setTimeout(function(){
+          this.setState({
+            playing :true,
+            song : i
+          });
+          this.props.onPlay(i);
+          }.bind(this), 500);
+        return;
+      }  
+
+      // if stopped, play
+      // stop and play new elem
+      if (this.state.playing === false) {
+          setTimeout(function(){
+          this.setState({
+            playing :true,
+            song : i
+          });
+          this.props.onPlay(i);
+          }.bind(this), 500);
+        return;
+      }
+  }
   
     render() {
       

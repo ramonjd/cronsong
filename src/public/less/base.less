@@ -13,6 +13,7 @@
 @import "../../../bower_components/bootstrap/less/buttons.less";
 @import "../../../bower_components/bootstrap/less/forms.less";
 @import "../../../bower_components/bootstrap/less/labels.less";
+@import "../../../bower_components/bootstrap/less/modals.less";
 // Utility classes
 @import "../../../bower_components/bootstrap/less/utilities.less";
 @import "../../../bower_components/bootstrap/less/responsive-utilities.less";
@@ -135,5 +136,25 @@ ul {
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
+  }
+}
+
+.overlay {
+
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.3);
+  .modal {
+    position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
+  display: block;
   }
 }

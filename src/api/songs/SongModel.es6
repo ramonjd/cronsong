@@ -1,6 +1,4 @@
 import fs from 'fs';
-import {play} from '../../exec/playSong';
-import {quit} from '../../exec/playSong';
 import {ran} from '../../utils/Utils';
 import {filterMp3} from '../../utils/Utils';
 import {filterByIndex} from '../../utils/Utils';
@@ -29,18 +27,7 @@ class SongModel {
       let song = filterByIndex(files, randomIndex - 1);
       callback(remodelArray([song]));
     } 
-    
-    static play(song = '', callback = function(){}) {
-        let songPath = config.DIR_SONGS + song;
-        play(song);
-        callback(remodelArray([songPath]));
-    }
-    
-    static stop(callback = function(){}) {
-       console.log('sound model quit');
-       quit();
-       callback(); 
-    }
+
 }
 export default SongModel;
 
