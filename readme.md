@@ -3,20 +3,24 @@
 
 Pick and queue music for your weekly and daily standups. To be run on Raspberry PI, but values can be swapped to suit any linux environment
 
+dev setup
+
 ```
 npm install
 sudo apt-get install mplayer
-gulp
+npm run build:dev
 
 ```
 
 in a new term
 ```
-npm run start
+npm run start:dev
 ```
 
-build prod
+build and start prod
 
 ```
-gulp dist
+npm run build:prod
+npm run start:prod
+
 ```
