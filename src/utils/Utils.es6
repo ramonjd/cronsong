@@ -1,6 +1,5 @@
 
 import fs from 'fs';
-import sys from 'sys';
 import {exec} from 'child_process';
 
 

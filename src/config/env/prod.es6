@@ -1,10 +1,10 @@
 const CONSTANTS = {
-  USER : 'pi',
-  PLAYER : 'omxplayer',
-  DIR_SONGS : '/home/pi/workspace/sounds/',
-  DIR_SOUNDS : '/home/pi/workspace/sounds/bytes/',
-  CMD_SONG : '/home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/songcron/exec/playSong.js',
-  CMD_SOUND : '/home/pi/node-v0.11.9-linux-arm-pi/bin/node /home/pi/workspace/songcron/exec/playSound.js'
+  USER : 'skyid',
+  PLAYER : 'mplayer',
+  DIR_SONGS : '/home/skyid/Music/_songs/',
+  DIR_SOUNDS : '/home/skyid/Music/_sounds/',
+  CMD_SONG : '/usr/local/bin/node /home/skyid/Workspace/rpi-media/.tmp/exec/playSong.js',
+  CMD_SOUND : '/usr/local/bin/node /home/skyid/Workspace/rpi-media/.tmp/exec/playSound.js'
 };
 
 export default CONSTANTS;

@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start" : "node ./.tmp/app"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "async": "^1.2.1",
     "bluebird": "^2.9.27",
     "body-parser": "^1.12.4",
+    "bootstrap": "^3.3.6",
     "colors": "^1.1.2",
-    "crontab": "^1.0.2",
-    "express": "^4.12.4",
+    "crontab": "^1.1.2",
+    "express": "^4.13.3",
     "flux": "^2.0.3",
     "object-assign": "^3.0.0",
     "omxcontrol": "0.0.1",

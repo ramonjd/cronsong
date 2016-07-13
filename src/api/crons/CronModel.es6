@@ -51,12 +51,13 @@ class CronModel {
           CronTab.load(user, (err, tab) =>  {
             if (err) {
               reject(err);
-            }  else {             
+            }  else {
              tab.create(cron.command, cron.expression, cron.comment);
              tab.save((err, tab) => { 
                 if (err) { 
                   reject(err);
                 } else { 
+
                   resolve(remodelArray(tab.jobs()));
                 }
              });
