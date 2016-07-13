@@ -1,5 +1,5 @@
 const CONSTANTS = {
-  USER : 'skyid',
+  USER : '',
   PLAYER : 'mplayer',
   DIR_SONGS : '/home/skyid/Music/_songs/',
   DIR_SOUNDS : '/home/skyid/Music/_sounds/',

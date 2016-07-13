@@ -13,12 +13,14 @@ let Cron  = {
 
   create(req, res, next) {
     var newCron= new CronModel(req.body);
-    console.log('newCron', newCron);
-
-    CronModel.create(newCron).then(cron => {
-      return res.status(200).json({
-        'jobs' : cron
-      });
+    CronModel.create(newCron)
+        .then(cron => {
+          return res.status(200).json({
+            'jobs' : cron
+          });
+        })
+    .catch(err => {
+      console.log('create con callback err', err);
     });
   },
 

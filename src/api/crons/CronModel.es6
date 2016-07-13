@@ -47,7 +47,7 @@ class CronModel {
     }
     
     static create(cron = {}, user = config.USER) {
-      return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           CronTab.load(user, (err, tab) =>  {
             if (err) {
               reject(err);
